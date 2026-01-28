@@ -28,30 +28,37 @@ Developed by: Mahalakshmi B
 RegisterNumber:  212224040182
 
 ```
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
-X = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-Y = [20, 30, 34, 46, 50, 61, 67, 73, 80, 86, 91, 95]
+# Read data from CSV file
+data = pd.read_csv("student_scores.csv")
 
-n = len(X)
+X = data['Hours'].values
+y = data['Scores'].values
 
-mean_x = sum(X) / n
-mean_y = sum(Y) / n
+# Mean values
+mean_x = np.mean(X)
+mean_y = np.mean(y)
 
-num = 0
-den = 0
-for i in range(n):
-    num += (X[i] - mean_x) * (Y[i] - mean_y)
-    den += (X[i] - mean_x) ** 2
+# Slope and intercept
+m = np.sum((X - mean_x) * (y - mean_y)) / np.sum((X - mean_x) ** 2)
+c = mean_y - m * mean_x
 
-m = num / den
-b = mean_y - m * mean_x
+# User input
+hours = float(input("Enter number of study hours: "))
 
-print(f"Y = {m:.2f}X + {b:.2f}")
+# Prediction
+predicted_marks = m * hours + c
 
-y_pred = [m * x + b for x in X]
+print("Study Hours:", hours)
+print("Predicted Marks:", round(predicted_marks, 2))
+print(f"Regression Equation: Y = {m:.2f}X + {c:.2f}")
 
-plt.scatter(X, Y)
+# Plot
+y_pred = m * X + c
+plt.scatter(X, y)
 plt.plot(X, y_pred)
 plt.xlabel("Study Hours")
 plt.ylabel("Marks Scored")
@@ -60,7 +67,7 @@ plt.show()
 ```
 ## Output:
 
-<img width="830" height="605" alt="image" src="https://github.com/user-attachments/assets/51d594fc-536b-4418-9acd-e759a7d2a96c" />
+<img width="811" height="663" alt="image" src="https://github.com/user-attachments/assets/21c15aa3-b27e-40fc-be77-cf3d435be220" />
 
 ## Result:
 Thus the program to implement the simple linear regression model for predicting the marks scored is written and verified using python programming.
